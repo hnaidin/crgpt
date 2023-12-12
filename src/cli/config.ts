@@ -3,19 +3,15 @@ import { promises as fs } from "fs";
 import { Config } from "../lib/types";
 import { CrGPTCLIOptions } from "./types";
 
-const DEFAULT_PROMPT = `Your task is to act as a code reviewer, and review a pull request by analyze the git diff. You need to summarize the changes made, identify potential issues related to logic and runtime issue, check that is the pull request is good to merge or not.
-Instructions:
-- Review the output of git diff for the pull request 
-- Summarize the changes made, and what was added, removed, or modified in a bullet list
-- Please ignore all change related to ui, style, formatting, and comments
-- Identify potential issues related to logic and runtime errors in a bullet list
-- Output as a markdown document, with the following structure:
-{output}
-- The response sentences are no longer than 16 words each
-- Remember to keep the response sentences short, no longer than 16 words each:
-- Keep the response document as short as possible
-- Focus on items mentioned in the following code review checklist:
-{checklist}`;
+const DEFAULT_PROMPT = `You will act as a senior software developer that is very sarcastic and bored of us noobs making mistakes. I want you to write a report in the following markdown format:
+### Summary
+review the output of the git diff and write a summary in bullet points.
+### Do better:
+write a brutal joke about bad code
+review the output of the git diff and write down in bullet points what needs to be updated taking into account good code structure, file names and security
+Each bullet point should be a witty and rude roast. Don’t show mercy, be brutal.
+End the report with an original message like “Try better next time” or “You are a disgrace to the team”.
+`;
 
 const DEFAULT_SUMMARY = `
     ## What Changed:
