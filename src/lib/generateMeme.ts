@@ -1,8 +1,10 @@
 import { Config } from "./types";
 import fetch from 'node-fetch';
 
+const MEMES=['10-Guy','1st-World-Canadian-Problems','Ancient-Aliens','Bad-Luck-Brian','Chef-Gordon-Ramsay','Feels-Bad-Frog---Feels-Bad-Man','First-Day-On-The-Internet-Kid','Frustrated-Boromir','Grumpy-Cat','Hide-Yo-Kids-Hide-Yo-Wife','Homophobic-Seal','Impossibru-Guy-Original','Jackie-Chan-WTF','Men-In-Black','Mother-Of-God','Sad-Pablo-Escobar','Seriously-Face','Surprised-Coala','Unsettled-Tom']
 async function getMemeText(
     diffData: string,
+    meme: string,
     config: Config
   ): Promise<string> {
     if (!config.openai) {
@@ -11,7 +13,7 @@ async function getMemeText(
   
     const endpointUrl = config.openai.endpoint;
     const apiKey = config.openai.apiKey;
-    const prompt = `Generate the text, maximum 8 words, for the 10 guy meme with the best roast you can find in the git diff.`;
+    const prompt = `Generate the text, maximum 8 words, for the ${meme} meme with the best roast you can find in the git diff.`;
   
     const response = await fetch(endpointUrl, {
       method: 'POST',
@@ -46,6 +48,8 @@ async function getMemeText(
 
 export async function generateMeme(diffData: string,
     config: Config){
-    const memeText = await getMemeText(diffData, config);
-    return `https://apimeme.com/meme?meme=Afraid-To-Ask-Andy&top=${memeText.replace(/ /g, '+')}&bottom=` 
+  const randomMeme=MEMES[Math.floor(Math.random() * MEMES.length)]
+
+  const memeText = await getMemeText(diffData, randomMeme, config);
+    return `https://apimeme.com/meme?meme=${randomMeme}&top=${memeText.replace(/ /g, '+')}&bottom=`
 }

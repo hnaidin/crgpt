@@ -141,7 +141,7 @@ export async function runCRGPTCLI(
   console.log(meme);
 
   if (config.output == 'bitbucket' && config.bitbucket && prId) {
-    await postCommentToBitbucketPR(summary, config, prId);
+    await postCommentToBitbucketPR(summary, config, prId, meme);
   } else if (config.output == 'github' && config.github && prId) {
     await postCommentToGithubPR(summary, config, prId);
   } else if (config.output == 'file' && config.file) {
