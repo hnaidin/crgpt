@@ -15,21 +15,16 @@ export async function postCommentToBitbucketPR(
   
     const { accessToken, endpoint } = config.bitbucket;
     const { repoSlug, projectSlug } = config.code;
-    const apiEndpoint = endpoint || 'https://api.bitbucket.org/2.0/repositories/${owner}/${repoSlug}/pullrequests/${prId}/comments'
-    const apiUrl = parseStringTemplate(apiEndpoint, {
-      owner: projectSlug,
-      repoSlug,
-      prId,
-    });
-    
+    const apiEndpoint = endpoint || `https://api.bitbucket.org/2.0/repositories/${projectSlug}/${repoSlug}/pullrequests/${prId}/comments/`;
+
     const commentContent = result.content;
     const bodyData = {
       content: {
         raw: commentContent,
       },
     };
-  
-    const response = await fetch(apiUrl, {
+
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
