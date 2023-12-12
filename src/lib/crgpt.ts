@@ -12,6 +12,7 @@ import { postCommentToGithubPR } from './github';
 import { writeCodeReviewToFile } from './markdown';
 import { printCodeReviewToConsole } from './stdout';
 import { generateDiffs } from './git';
+import { generateMeme } from './generateMeme';
 
 
 async function postDiffToEndpoint(
@@ -112,7 +113,7 @@ async function summarizeCRContent(
 export async function runCRGPT(
   options: runCRGPTOptions,
   config: Config
-): Promise<ReviewSumary> {
+): Promise<{summary: ReviewSumary, meme: string}> {
   const { sourceBranch, targetBranch, prId } = options;
   console.log(`run CRGPT`)
   console.log(`sourceBranch: ${sourceBranch}`);
@@ -126,7 +127,8 @@ export async function runCRGPT(
   const diffData = await generateDiffs(sourceBranch, targetBranch, config);
   const results = await processDiffs(diffData, config, prId);
   const commentContent = await summarizeCRContent(results, config);
-  return commentContent;
+  const meme = await generateMeme(diffData[0].diff, config);
+  return {summary: commentContent, meme};
 }
 
 export async function runCRGPTCLI(
@@ -134,15 +136,17 @@ export async function runCRGPTCLI(
   config: Config
 ): Promise<void> {
   const { prId } = options;
-  const commentContent = await runCRGPT(options, config);
+  const {meme, summary} = await runCRGPT(options, config);
+
+  console.log(meme);
 
   if (config.output == 'bitbucket' && config.bitbucket && prId) {
-    await postCommentToBitbucketPR(commentContent, config, prId);
+    await postCommentToBitbucketPR(summary, config, prId);
   } else if (config.output == 'github' && config.github && prId) {
-    await postCommentToGithubPR(commentContent, config, prId);
+    await postCommentToGithubPR(summary, config, prId);
   } else if (config.output == 'file' && config.file) {
-    await writeCodeReviewToFile(commentContent, config);
+    await writeCodeReviewToFile(summary, config);
   } else {
-    printCodeReviewToConsole(commentContent);
+    printCodeReviewToConsole(summary);
   }
 }
