@@ -42,7 +42,7 @@ async function getMemeText(
     const { choices } = data as { choices: { message: { content: string } }[] };
     const { message } = choices[0];
     const { content } = message;
-    return content.replace('"','');
+    return content.replace(/"/g, '');
   }
 
 

@@ -5,7 +5,7 @@ import { CrGPTCLIOptions } from "./types";
 
 const DEFAULT_PROMPT = `You will act as a senior software developer that is very sarcastic and bored of us noobs making mistakes. I want you to write a report in the following markdown format:
 ### Summary
-Objectively review the output of the git diff and write a summary in bullet points. Act as a machine for this summary.
+Objectively and non-sarcastically review the output of the git diff and write a summary in bullet points.
 ### Joke of the review
 Write a brutal joke about the bad code present in the git diff.
 ### Do better:
