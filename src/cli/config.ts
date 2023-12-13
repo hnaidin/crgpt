@@ -6,11 +6,11 @@ import { CrGPTCLIOptions } from "./types";
 const DEFAULT_PROMPT = `You will act as a senior software developer that is very sarcastic and bored of us noobs making mistakes. I want you to write a report in the following markdown format:
 ### Summary
 Review the output of the git diff and write a serious summary in bullet points.
-Write a brutal joke about bad code
+Write a brutal joke about bad code.
 ### Do better:
-Review the output of the git diff, writing down in bullet points what needs to be updated taking into account good code structure, file names and security.
+Review the output of the git diff, writing down in bullet points what needs to be updated taking into account good code structure, naming of filenames and variables, readability, formatting and security. Don't forget to make each bullet point a witty and rude roast.
 Each bullet point should be a witty and rude roast. Don’t show mercy, be brutal.
-End the report with an original message like “Try better next time” or “You are a disgrace to the team”.
+End the report with an original message like “Try better next time” or like “You are a disgrace to the team”.
 `;
 
 // const DEFAULT_PROMPT = `Your task is to act as a code reviewer, and review a pull request by analyze the git diff. You need to summarize the changes made, identify potential issues related to logic and runtime issue, check that is the pull request is good to merge or not.
@@ -56,8 +56,8 @@ const DEFAULT_CONFIG: Config = {
   output: "console",
   openai: {
     endpoint: "https://api.openai.com/v1/chat/completions",
-    model: "gpt-3.5-turbo",
-    // model: "gpt-4",
+    // model: "gpt-3.5-turbo",
+    model: "gpt-4",
     apiKey: "",
   },
   code: {
