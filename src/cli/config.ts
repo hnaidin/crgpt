@@ -43,7 +43,8 @@ const DEFAULT_CONFIG: Config = {
   output: "console",
   openai: {
     endpoint: "https://api.openai.com/v1/chat/completions",
-    model: "gpt-3.5-turbo",
+    // model: "gpt-3.5-turbo",
+    model: "gpt-4",
     apiKey: "",
   },
   code: {
